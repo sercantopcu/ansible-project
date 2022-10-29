@@ -1,0 +1,4 @@
+- hosts: all
+  tasks:
+  - name: Include task list in play
+    include_tasks: hostname.yml

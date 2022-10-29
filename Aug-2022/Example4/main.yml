@@ -1,0 +1,10 @@
+- hosts: vm1
+  vars:
+    package: "bind-utils"
+  tasks:
+  - debug:
+      msg: "Variable is: {{ package }}"
+
+  - yum:
+      name: '{{ package }}'
+      state: latest

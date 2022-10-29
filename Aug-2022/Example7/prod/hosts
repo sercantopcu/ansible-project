@@ -1,0 +1,5 @@
+[prod_web]
+prod-web1 ansible_host=159.223.118.210
+
+[prod_db]
+prod-db1 ansible_host=159.223.126.231

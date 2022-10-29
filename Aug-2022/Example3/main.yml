@@ -1,0 +1,27 @@
+- hosts: all
+  tasks:
+  - name: Install ntpd
+    yum:
+      name: ntp
+      state: latest
+
+  - name: Update ntp.conf
+    lineinfile:
+      path: /etc/ntp.conf
+      regexp: '^server'
+      line: server pool.ntp.org iburst
+      backup: yes
+    notify: Restart ntpd
+
+  - name: Cleanup ntp.conf
+    lineinfile:
+      path: /etc/ntp.conf
+      state: absent
+      regexp: '^server [0-9]'
+    notify: Restart ntpd
+
+  handlers:
+  - name: Restart ntpd
+    systemd:
+      state: restarted
+      name: ntpd

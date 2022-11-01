@@ -24,4 +24,4 @@
   - name: Restart ntpd
     systemd:
       state: restarted
-      name: ntpd
+      name: ntpd 

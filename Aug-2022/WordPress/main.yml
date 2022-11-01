@@ -1,0 +1,9 @@
+- hosts: centos
+  vars: 
+  - php_version: "72"
+  tasks:
+  - include_tasks: apache.yml
+
+  - include_tasks: php.yml
+
+  - include_tasks: wordpress.yml

@@ -1,0 +1,37 @@
+- hosts: web
+  tasks:
+  - name: Install httpd
+    yum:
+      name: httpd
+      state: latest
+
+  - name: Install prerequisites
+    yum:
+      name: "{{ packages }}"
+    vars:
+      packages:
+      - wget
+      - unzip
+
+  - name: Download and extract template
+    unarchive:
+      src: https://www.free-css.com/assets/files/free-css-templates/download/page284/2rings.zip
+      dest: /root/
+      remote_src: yes
+
+  - name: Copy template to /var/www/html
+    shell: "cp -r /root/2rings-html/* /var/www/html/"
+
+  - name: Fix file ownership
+    file:
+      path: /var/www/html
+      state: directory
+      recurse: yes
+      owner: apache
+      group: apache
+
+  - name: Start httpd
+    systemd:
+      name: httpd
+      state: started
+      enabled: yes

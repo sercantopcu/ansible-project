@@ -1,0 +1,25 @@
+- hosts: web
+  tasks:
+  - name: Install git
+    yum:
+      name: git
+      state: latest
+
+  - name: Clone App Repo
+    shell: "git clone https://github.com/spring-projects/spring-petclinic.git"
+    args:
+      creates: /root/spring-petclinic
+
+  - name: Install Java
+    yum:
+      name: java-11-openjdk
+      state: latest
+
+  - name: Maven Build
+    shell: "./mvnw package"
+    args:
+      chdir: /root/spring-petclinic/
+      creates: /root/spring-petclinic/target/spring-petclinic-2.7.3.jar
+
+  - name: Start App
+    shell: "java -jar /root/spring-petclinic/target/*.jar &"

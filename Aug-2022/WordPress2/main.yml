@@ -1,0 +1,8 @@
+- hosts: centos
+  tasks:
+  - name: Disable SELinux
+    selinux:
+        state: disabled
+
+  - import_role:
+      name: apache-role
